@@ -1,0 +1,7 @@
+POST http://localhost:3001/polls
+Content-Type: application/json
+
+{
+  "question": "express question wowza :O",
+  "choices": ["YEEHAWW", "hell yeah brutherhrrr"]
+}
