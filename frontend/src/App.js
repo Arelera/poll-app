@@ -1,8 +1,9 @@
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Navbar from './components/Navbar';
-import QuestionList from './components/QuestionList';
+import PollBox from './components/PollBox';
+import PollList from './components/PollList';
 
 const Div = styled.div`
   min-height: 100vh;
@@ -24,27 +25,49 @@ function App() {
     <Router>
       <Div>
         <Navbar />
-        <InnerDiv>
-          <QuestionList
-            questions={[
-              { question: 'Wadap peeposss' },
-              { question: 'Hey yoo?' },
-              {
-                question:
-                  'Alright, this is just some kinda long question placeholder?',
-              },
-              { question: 'Wadap peeposss' },
-              { question: 'Hey yoo?' },
-              {
-                question:
-                  'Alright, this is just some kinda long question placeholder?',
-              },
-            ]}
-          />
-        </InnerDiv>
+        <Switch>
+          {/* <Route path="/polls/:id/results">
+            <PollBox polls={polls} />
+          </Route> */}
+          <Route path="/polls/:id">
+            <PollBox polls={polls} />
+          </Route>
+          <Route path="/">
+            <InnerDiv>
+              <PollList polls={polls} />
+            </InnerDiv>
+          </Route>
+        </Switch>
       </Div>
     </Router>
   );
 }
+
+const polls = [
+  {
+    question: 'Wadap peeposss',
+    id: 1,
+    choices: [
+      'So what?',
+      'Sure, I accept',
+      'Dogs',
+      'A long choice to see how it gonn be lookin on tha screen mah dudeeyy',
+    ],
+  },
+  {
+    question: 'Hey yoo?',
+    id: 2,
+  },
+  {
+    question: 'Alright, this is just some kinda long question placeholder?',
+    id: 3,
+  },
+  { question: 'Wadap peeposss', id: 4 },
+  { question: 'Hey yoo?', id: 5 },
+  {
+    question: 'Alright, this is just some kinda long question placeholder?',
+    id: 6,
+  },
+];
 
 export default App;

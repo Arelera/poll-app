@@ -7,6 +7,7 @@ const Li = styled.li`
   color: #333;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   h3 {
     font-size: 1.25rem;
     font-weight: 500;
@@ -19,14 +20,16 @@ const Li = styled.li`
   }
 `;
 
-const QuestionLi = ({ question }) => {
+const PollLi = ({ question, clickHandlerVote }) => {
   return (
     <Li>
       <h3>{question.question}</h3>
       {/* clicking this should go to a seperate link with questions url */}
-      <Button>Vote</Button>
+      <Button onClick={clickHandlerVote} primary={true}>
+        Vote
+      </Button>
     </Li>
   );
 };
 
-export default QuestionLi;
+export default PollLi;
