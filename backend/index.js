@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 
-app.use('/polls', pollsRouter);
+app.use('/api/polls', pollsRouter);
 
 app.listen(process.env.PORT || 3001, () => {
   console.log('Server running.');
