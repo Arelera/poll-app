@@ -1,23 +1,13 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
+import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import PollBox from './components/PollBox';
-import PollList from './components/PollList';
 
 const Div = styled.div`
   min-height: 100vh;
   background: #fafafa;
-`;
-
-const InnerDiv = styled.div`
-  padding: 1rem;
-  min-height: 100%; /* not working for some reason??? */
-  margin: 1rem 2rem;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0px 2px 5px #ccc;
-  background: #fff;
 `;
 
 function App() {
@@ -26,18 +16,21 @@ function App() {
       <Div>
         <Navbar />
         <Switch>
-          {/* <Route path="/polls/:id/results">
-            <PollBox polls={polls} />
-          </Route> */}
+          {/* i think i can juts cover everything in a pollbox here, i'll fix it later */}
+          <Route path="/polls/:id/results">
+            <PollBox polls={polls} type="res" />
+          </Route>
           <Route path="/polls/:id">
-            <PollBox polls={polls} />
+            <PollBox polls={polls} type="poll" />
+          </Route>
+          <Route path="/create-poll">
+            <PollBox type="form" />
           </Route>
           <Route path="/">
-            <InnerDiv>
-              <PollList polls={polls} />
-            </InnerDiv>
+            <PollBox polls={polls} />
           </Route>
         </Switch>
+        <Footer />
       </Div>
     </Router>
   );
@@ -45,14 +38,18 @@ function App() {
 
 const polls = [
   {
-    question: 'Wadap peeposss',
+    question: 'Wadap peeposss Wadap peeposss Wadap?',
     id: 1,
     choices: [
-      'So what?',
-      'Sure, I accept',
-      'Dogs',
-      'A long choice to see how it gonn be lookin on tha screen mah dudeeyy',
+      ['So what?', 8],
+      ['Sure, I accept', 4],
+      ['Dogs', 14],
+      [
+        'A long choice to see how it gonn be lookin on tha screen mah dudeeyy',
+        2,
+      ],
     ],
+    created_at: '2020-11-04',
   },
   {
     question: 'Hey yoo?',

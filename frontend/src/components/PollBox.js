@@ -1,9 +1,12 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Poll from './Poll';
+import PollForm from './PollForm';
+import PollList from './PollList';
+import PollRes from './PollRes';
 
 const Div = styled.div`
-  min-height: 600px;
+  max-width: 100%;
   padding: 0.5rem 2rem;
   margin: 0rem 2rem;
   border: 1px solid #ddd;
@@ -13,15 +16,28 @@ const Div = styled.div`
   background: #fff;
 `;
 
-const PollBox = ({ polls }) => {
+const PollBox = ({ polls, type }) => {
+  // type -> res, poll, form
   const id = useParams().id;
-  const poll = polls.find((p) => Number(id) === p.id);
+  // const poll = polls.find((p) => Number(id) === p.id);
 
-  return (
-    <Div>
-      <Poll poll={poll} />
-    </Div>
-  );
+  let elToRender;
+
+  switch (type) {
+    case 'form':
+      elToRender = <PollForm />;
+      break;
+    case 'res':
+      elToRender = <PollRes poll={polls.find((p) => Number(id) === p.id)} />;
+      break;
+    case 'poll':
+      elToRender = <Poll poll={polls.find((p) => Number(id) === p.id)} />;
+      break;
+    default:
+      elToRender = <PollList polls={polls} />;
+  }
+
+  return <Div>{elToRender}</Div>;
 };
 
 export default PollBox;

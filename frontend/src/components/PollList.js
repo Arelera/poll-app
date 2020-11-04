@@ -10,7 +10,6 @@ const PollList = ({ polls }) => {
   const history = useHistory();
 
   const clickHandlerVote = (id) => {
-    console.log('Clicked');
     history.push(`/polls/${id}`);
   };
 

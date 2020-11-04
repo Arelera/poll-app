@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from './Button';
 
@@ -29,21 +30,26 @@ const Buttons = styled.div`
 `;
 
 const Poll = ({ poll }) => {
+  const history = useHistory();
   const [checkedChoice, setCheckedChoice] = useState('');
 
   const checkHandler = (choice) => {
     setCheckedChoice(choice);
   };
 
-  const handleSubmit = () => {
-    console.log('Clicked submit');
+  const handleResultsClick = (id) => {
+    history.push(`/polls/${id}/results`);
+  };
+
+  const handleSubmit = (id) => {
+    history.push(`/polls/${id}/results`);
   };
 
   return (
     <div>
       <H2>{poll.question}</H2>
       <Ul>
-        {poll.choices.map((choice) => (
+        {poll.choices.map(([choice]) => (
           <Li key={choice}>
             <label>
               <input
@@ -58,11 +64,17 @@ const Poll = ({ poll }) => {
         ))}
       </Ul>
       <Buttons>
-        <Button onClick={handleSubmit} size="large" primary={true}>
+        <Button
+          onClick={() => handleSubmit(poll.id)}
+          size="large"
+          primary={true}
+        >
           Submit
         </Button>
         <div>
-          <Button size="large">Results</Button>
+          <Button onClick={() => handleResultsClick(poll.id)} size="large">
+            Results
+          </Button>
           <Button size="large">Copy link</Button>
         </div>
       </Buttons>
