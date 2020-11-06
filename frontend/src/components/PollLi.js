@@ -8,7 +8,7 @@ const Li = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  h3 {
+  p {
     font-size: 1.25rem;
     font-weight: 500;
   }
@@ -23,7 +23,7 @@ const Li = styled.li`
 const PollLi = ({ question, clickHandlerVote }) => {
   return (
     <Li>
-      <h3>{question.question}</h3>
+      <p>{question.question}</p>
       {/* clicking this should go to a seperate link with questions url */}
       <Button onClick={clickHandlerVote} primary={true}>
         Vote
