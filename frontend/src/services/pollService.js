@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3001/api/polls';
+const baseUrl = '/api/polls';
 
 export const getAll = async () => {
   const response = await fetch(baseUrl);
