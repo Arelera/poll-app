@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from './Button';
 
@@ -20,14 +21,17 @@ const Li = styled.li`
   }
 `;
 
-const PollLi = ({ question, clickHandlerVote }) => {
+const PollLi = ({ question, id }) => {
   return (
     <Li>
-      <p>{question.question}</p>
-      {/* clicking this should go to a seperate link with questions url */}
-      <Button onClick={clickHandlerVote} primary={true}>
-        Vote
-      </Button>
+      {question && (
+        <>
+          <p>{question.question}</p>
+          <Link to={`/polls/${id}`}>
+            <Button primary={true}>Vote</Button>
+          </Link>
+        </>
+      )}
     </Li>
   );
 };

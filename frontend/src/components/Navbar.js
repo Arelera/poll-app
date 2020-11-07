@@ -4,8 +4,7 @@ import { NavLink } from 'react-router-dom';
 const Nav = styled.nav`
   height: 60px;
   width: 100%;
-  padding: 2.5rem 2rem;
-  /* border-bottom: 2px solid #ff8811; */
+  padding: 3rem 2.5rem;
 
   background: #fafafa;
   display: flex;
@@ -42,7 +41,10 @@ const Nav = styled.nav`
 
   .selected {
     text-decoration: underline;
-    color: #9dd9d2;
+    text-decoration-color: #9dd9d2;
+  }
+  @media screen and (max-width: 425px) {
+    padding: 2.5rem 0rem;
   }
 `;
 

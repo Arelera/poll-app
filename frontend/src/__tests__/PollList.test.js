@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import PollList from './PollList';
+import PollList from '../components/PollList';
 
 const questions = [
   { question: 'Wadap peeposss', id: 1 },

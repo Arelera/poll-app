@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from './Button';
 import { getOne, voteOne } from '../services/pollService';
 import Loader from './Loader';
+import useLocalVotes from '../hooks/useLocalVotes';
 
 const H2 = styled.h2`
   font-size: 1.75rem;
@@ -38,20 +39,23 @@ const Date = styled.span`
   color: #6a6a6a;
 `;
 
-const Poll = ({}) => {
+const Poll = () => {
   const [poll, setPoll] = useState();
   const [checkedChoice, setCheckedChoice] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
   const id = useParams().id;
+  const { iCanVote, voteLocal } = useLocalVotes(id);
 
   useEffect(() => {
-    getOne(id).then((data) => {
-      setPoll(data);
-      setIsLoading(false);
-      console.log(data);
-    });
-  }, []);
+    // if poll id is in localStorage, get pushed to poll results
+    iCanVote()
+      ? getOne(id).then((data) => {
+          setPoll(data);
+          setIsLoading(false);
+        })
+      : history.push(`/polls/${id}/results`);
+  }, [history, iCanVote, id]);
 
   const checkHandler = (choice) => {
     setCheckedChoice(choice);
@@ -59,7 +63,7 @@ const Poll = ({}) => {
 
   const handleSubmit = (poll) => {
     const choices = [...JSON.parse(poll.choices)];
-    choices.map((c, i) => {
+    choices.forEach((c, i) => {
       if (c[0] === checkedChoice) {
         choices[i][1]++;
       }
@@ -67,6 +71,11 @@ const Poll = ({}) => {
     voteOne({ ...poll, choices }).then((p) => {
       history.push(`/polls/${poll.id}/results`);
     });
+    voteLocal(id);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(window.location.href);
   };
 
   return (
@@ -102,13 +111,12 @@ const Poll = ({}) => {
               Submit
             </Button>
             <div>
-              <Button
-                onClick={() => history.push(`/polls/${poll.id}/results`)}
-                size="large"
-              >
-                Results
+              <Link to={`/polls/${poll.id}/results`}>
+                <Button size="large">Results</Button>
+              </Link>
+              <Button onClick={handleCopy} size="large">
+                Copy link
               </Button>
-              <Button size="large">Copy link</Button>
             </div>
           </Buttons>
         </>

@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import PollLi from './PollLi';
+import PollLi from '../components/PollLi';
 
 const question = { question: 'Yo wadap?', id: 2 };
 

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import PollLi from './PollLi';
 
@@ -10,8 +9,7 @@ const Ul = styled.ul`
   min-height: 100%;
 `;
 
-const PollList = ({}) => {
-  const history = useHistory();
+const PollList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [polls, setPolls] = useState([]);
 
@@ -22,22 +20,12 @@ const PollList = ({}) => {
     });
   }, []);
 
-  const clickHandlerVote = (id) => {
-    history.push(`/polls/${id}`);
-  };
-
   return (
     <Ul>
       {isLoading ? (
         <Loader />
       ) : (
-        polls.map((p) => (
-          <PollLi
-            key={p.id}
-            clickHandlerVote={() => clickHandlerVote(p.id)}
-            question={p}
-          />
-        ))
+        polls.map((p) => <PollLi key={p.id} question={p} id={p.id} />)
       )}
     </Ul>
   );

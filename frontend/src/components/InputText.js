@@ -7,6 +7,9 @@ const Input = styled.input`
   padding: 0.75rem 0.5rem;
   width: 100%;
   font-size: ${(props) => (props.size ? '1.25rem' : '1.1rem')};
+  :focus {
+    outline: 2px solid #ff8811;
+  }
 `;
 
 const InputText = ({ placeholder, size, onChange }) => {

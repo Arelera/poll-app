@@ -1,48 +1,60 @@
-import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import styled from 'styled-components';
 
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
+import Poll from './components/Poll';
 import PollBox from './components/PollBox';
+import PollForm from './components/PollForm';
+import PollList from './components/PollList';
+import PollRes from './components/PollRes';
 
-import { getAll } from './services/pollService';
-
-const Div = styled.div`
-  min-height: 100vh;
+const CoverDiv = styled.div`
+  height: 100%;
+  width: 100%;
   background: #fafafa;
 `;
 
+const Div = styled.div`
+  min-height: 100vh;
+  width: 60%;
+  margin: auto;
+  background: #fafafa;
+  @media screen and (max-width: 1024px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 425px) {
+    width: 99%;
+  }
+`;
+
 function App() {
-  const [polls, setPolls] = useState([]);
-
-  useEffect(() => {
-    getAll().then((p) => {
-      setPolls(p);
-    });
-  }, []);
-
   return (
     <Router>
-      <Div>
-        <Navbar />
-        <Switch>
-          {/* i think i can juts cover everything in a pollbox here, i'll fix it later */}
-          <Route path="/polls/:id/results">
-            <PollBox type="res" />
-          </Route>
-          <Route path="/polls/:id">
-            <PollBox type="poll" />
-          </Route>
-          <Route path="/create-poll">
-            <PollBox type="form" />
-          </Route>
-          <Route path="/">
-            <PollBox polls={polls} />
-          </Route>
-        </Switch>
-        <Footer />
-      </Div>
+      <CoverDiv>
+        <Div>
+          <Navbar />
+          <PollBox>
+            <Switch>
+              <Route exact path="/polls/:id/results" component={PollRes} />
+
+              <Route exact path="/polls/:id" component={Poll} />
+
+              <Route exact path="/create-poll" component={PollForm} />
+              <Route exact path="/" component={PollList} />
+              <Route>
+                <Redirect to="/" />
+              </Route>
+            </Switch>
+          </PollBox>
+          <Footer />
+        </Div>
+      </CoverDiv>
     </Router>
   );
 }
