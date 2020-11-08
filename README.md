@@ -12,6 +12,7 @@ Used technologies include:
 
 - ReactJS
 - Styled components
+- React router
 
 ## Backend
 
